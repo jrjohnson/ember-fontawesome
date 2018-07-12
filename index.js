@@ -89,10 +89,17 @@ module.exports = {
     // @TODO: look for any addons contributing config. maybe enumerated in this.app.options.addons
     let addonOptions = (this.parent && this.parent.options) || (this.app && this.app.options) || {};
     let fontawesomeConfig;
-    fontawesomeConfig = addonOptions['fontawesome'] || {
-      enableExperimentalBuildTimeTransform: false,
-      icons: {}
-    };
+    fontawesomeConfig = addonOptions['fontawesome'] || {};
+
+    if (!('icons' in fontawesomeConfig)) {
+      fontawesomeConfig.icons = {};
+    }
+    if (!('enableExperimentalBuildTimeTransform' in fontawesomeConfig)) {
+      fontawesomeConfig.enableExperimentalBuildTimeTransform = false;
+    }
+    if (!('defaultPrefix' in fontawesomeConfig)) {
+      fontawesomeConfig.defaultPrefix = 'fas';
+    }
 
     if (Object.keys(fontawesomeConfig.icons).length === 0) {
       glob.sync('node_modules/@fortawesome/@(free|pro)-*-svg-icons')
